@@ -75,11 +75,11 @@
 
         <div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-3xl px-5 py-4 rounded-[2.5rem] flex items-end space-x-5 border border-white/10 shadow-2xl z-30">
             
-            <a href="profil.html" class="w-16 h-16 bg-gradient-to-b from-green-400 to-green-600 rounded-[1.25rem] shadow-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
+            <div onclick="openProfil()" class="w-16 h-16 bg-gradient-to-b from-green-400 to-green-600 rounded-[1.25rem] shadow-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
                 <svg class="w-9 h-9 text-white fill-current" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
-            </a>
+            </div>
 
             <div onclick="openCamera()" class="w-16 h-16 bg-gradient-to-b from-gray-200 to-gray-400 rounded-[1.25rem] shadow-lg flex items-center justify-center relative overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
                 <div class="w-10 h-7 bg-gray-700 rounded-sm relative">
@@ -132,6 +132,67 @@
             </div>
         </div>
     </div>
+
+    <div id="profil-modal" class="fixed inset-0 z-[150] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="relative w-full max-w-sm bg-white rounded-[2.5rem] overflow-hidden shadow-2xl transform transition-all scale-95 duration-300" id="profil-card">
+            
+            <div class="h-24 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+
+            <div class="px-6 pb-8 -mt-12">
+                <div class="text-center">
+                    <div class="inline-block p-1 bg-white rounded-full shadow-lg">
+                        <img src="public/profil.png" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover bg-gray-100">
+                    </div>
+                    <h2 class="mt-4 text-xl font-bold text-gray-800">Fathullah, S.Pd., Gr</h2>
+                    <p class="text-blue-600 text-sm font-medium px-4 italic">Berdedikasi mengintegrasikan teknologi dalam pelayanan siswa di era digital.</p>
+                </div>
+
+                <hr class="my-5 border-gray-100">
+
+                <div class="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="flex items-start space-x-4">
+                        <span class="text-lg">🆔</span>
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">NIP</p>
+                            <p class="text-sm text-gray-700 font-medium">199305302020121003</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <span class="text-lg">🏫</span>
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Unit Kerja</p>
+                            <p class="text-sm text-gray-700 font-medium">UPT SPF SMP Negeri 3 Makassar</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <span class="text-lg">🎓</span>
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Riwayat Studi</p>
+                            <ul class="mt-1 space-y-2">
+                                <li class="text-sm text-gray-700 leading-tight">
+                                    <span class="block font-semibold">SMK Negeri 3 Gorontalo</span>
+                                    <span class="text-xs text-gray-500">Teknik Komputer dan Jaringan</span>
+                                </li>
+                                <li class="text-sm text-gray-700 leading-tight">
+                                    <span class="block font-semibold">Universitas Negeri Gorontalo</span>
+                                    <span class="text-xs text-gray-500">S1 Bimbingan dan Konseling</span>
+                                </li>
+                                <li class="text-sm text-gray-700 leading-tight">
+                                    <span class="block font-semibold">Universitas Pancasakti Tegal</span>
+                                    <span class="text-xs text-gray-500">Pendidikan Profesi Guru</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="closeProfil()" class="mt-6 w-full bg-gray-900 text-white py-3 rounded-2xl font-semibold active:scale-95 transition">Tutup Profil</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
         // Fungsi Notifikasi Belum Terinstal
@@ -220,6 +281,27 @@
             if (stream) stream.getTracks().forEach(track => track.stop());
             document.getElementById('camera-modal').classList.add('hidden');
         }
+
+        function openProfil() {
+    const modal = document.getElementById('profil-modal');
+    const card = document.getElementById('profil-card');
+    modal.classList.remove('hidden');
+    // Animasi sedikit membesar
+    setTimeout(() => {
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+    }, 10);
+}
+
+function closeProfil() {
+    const modal = document.getElementById('profil-modal');
+    const card = document.getElementById('profil-card');
+    card.classList.add('scale-95');
+    card.classList.remove('scale-100');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 200);
+}
     </script>
 </body>
 </html>
