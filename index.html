@@ -1,169 +1,227 @@
 <!DOCTYPE html>
-<html lang="id" class="light">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LabKreasi</title>
+    <title>Lab Kreasi</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link href="./dist/output.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .ios-icon:active { transform: scale(0.92); transition: 0.1s; }
+        /* Animasi Shake untuk pesan error */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
-    </script>
+        .shake { animation: shake 0.2s ease-in-out 0s 2; }
+    </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans flex h-screen overflow-hidden transition-colors duration-300">
+<body class="overflow-hidden">
 
-    <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity opacity-0"></div>
-
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full lg:translate-x-0 lg:static flex flex-col transition-transform duration-300 ease-in-out">
+    <div class="h-screen w-full bg-cover bg-center flex flex-col items-center relative" 
+         style="background-image: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974&auto=format&fit=crop');">
         
-        <div class="h-16 shrink-0 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-700">
-            <div class="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">
-                labkreasi<span class="text-slate-800 dark:text-white">.my.id</span>
+        <div class="w-full flex justify-between px-8 pt-4 text-white text-sm font-semibold tracking-wide z-20">
+            <div id="clock">00:00</div> 
+            <div class="flex items-center space-x-3">
+                <div class="group relative cursor-help">
+                    <span id="wifi-icon">📶</span>
+                    <div class="absolute top-6 right-0 scale-0 transition-all rounded bg-black/80 p-2 text-[10px] text-white group-hover:scale-100 whitespace-nowrap">
+                        Connected to: <span id="network-name">Detecting...</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-1">
+                    <span id="battery-level" class="text-[10px]">--%</span>
+                    <span id="battery-icon">🔋</span>
+                </div>
             </div>
-            <button id="close-sidebar" class="lg:hidden text-slate-500 hover:text-slate-800 dark:hover:text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
         </div>
 
-        <div class="p-4 flex-1 overflow-y-auto">
+        <div class="mt-10 grid grid-cols-4 gap-y-8 gap-x-6 px-6 w-full max-w-md">
+            <a href="https://rostergen.labkreasi.my.id" class="flex flex-col items-center group">
+                <div class="w-16 h-16 bg-white rounded-[1.25rem] shadow-lg flex items-center justify-center overflow-hidden transform transition duration-200 group-hover:scale-105 ios-icon border border-gray-100">
+                    <img src="public/rostergen.ico" alt="RosterGen" class="w-full h-full object-cover shadow-inner" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=RG&background=7C3AED&color=fff';"> 
+                </div>
+                <span class="text-white text-[11px] mt-1.5 font-medium drop-shadow-md">RosterGen</span>
+            </a>
+
+            <a href="#" class="flex flex-col items-center group">
+                <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-[1.25rem] shadow-lg flex items-center justify-center transform transition duration-200 group-hover:scale-105 ios-icon">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <span class="text-white text-[11px] mt-1.5 font-medium drop-shadow-md">Galeri</span>
+            </a>
+
+            <a href="#" class="flex flex-col items-center group">
+                <div class="w-16 h-16 bg-white rounded-[1.25rem] shadow-lg flex items-center justify-center overflow-hidden transform transition duration-200 group-hover:scale-105 ios-icon border border-gray-200">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg" class="w-10 h-10 object-contain" alt="App">
+                </div>
+                <span class="text-white text-[11px] mt-1.5 font-medium drop-shadow-md">Dashboard</span>
+            </a>
+
+            <a href="#" class="flex flex-col items-center group">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-[1.25rem] shadow-lg flex items-center justify-center transform transition duration-200 group-hover:scale-105 ios-icon">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <span class="text-white text-[11px] mt-1.5 font-medium drop-shadow-md">Kontak</span>
+            </a>
+        </div>
+
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-3xl px-5 py-4 rounded-[2.5rem] flex items-end space-x-5 border border-white/10 shadow-2xl z-30">
             
-            <nav class="space-y-1 mb-6 mt-2">
-                <a href="#" class="flex items-center px-3 py-2.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-lg group font-medium">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    Dashboard
-                </a>
-            </nav>
+            <a href="profil.html" class="w-16 h-16 bg-gradient-to-b from-green-400 to-green-600 rounded-[1.25rem] shadow-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
+                <svg class="w-9 h-9 text-white fill-current" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+            </a>
 
-            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2">Menu Utama</p>
-            <nav class="space-y-1">
-                <a href="https://profil.labkreasi.my.id" target="_blank" class="flex items-center px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white rounded-lg group font-medium transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-cyan-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    Portofolio
-                </a>
-                <a href="https://blog.labkreasi.my.id" target="_blank" class="flex items-center px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white rounded-lg group font-medium transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path></svg>
-                    Blog
-                </a>
-            </nav>
-
-            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-8 mb-3 px-2">Tools</p>
-            <nav class="space-y-1">
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white rounded-lg group font-medium transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Tool 1 (Belum Ditautkan)
-                </a>
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white rounded-lg group font-medium transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
-                    Tool 2 (Belum Ditautkan)
-                </a>
-            </nav>
-
-            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-8 mb-3 px-2">Project</p>
-            <nav class="space-y-1 pb-4">
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white rounded-lg group font-medium transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    Project 1 (Belum Ditautkan)
-                </a>
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white rounded-lg group font-medium transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-rose-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    Project 2 (Belum Ditautkan)
-                </a>
-            </nav>
-        </div>
-        
-        <div class="p-4 border-t border-slate-200 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-800">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden bg-slate-100 dark:bg-slate-700">
-                    <img src="favicon.png" alt="Logo LK" class="w-full h-full object-cover">
-                </div>
-                <div>
-                    <p class="text-sm font-semibold">LabKreasi</p>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <div class="flex-1 flex flex-col h-screen overflow-hidden relative">
-        
-        <header class="h-16 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-4 sm:px-6 z-30">
-            <div class="flex items-center gap-4">
-                <button id="open-sidebar" class="lg:hidden p-2 rounded-md text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-                <h1 class="text-lg font-semibold hidden sm:block">Ikhtisar Panel</h1>
-            </div>
-
-            <div class="flex items-center gap-4">
-                <button id="theme-toggle" class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
-                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 3.22a1 1 0 011.415 0l.708.707a1 1 0 01-1.414 1.414l-.708-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM15.636 15.636a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-3.22a1 1 0 01-1.415 0l-.708-.707a1 1 0 011.414-1.414l.708.707a1 1 0 010 1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm2.364-5.636a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM10 5a5 5 0 100 10 5 5 0 000-10z" clip-rule="evenodd"></path></svg>
-                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-slate-700 dark:text-slate-200" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                </button>
-            </div>
-        </header>
-
-        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-            <div class="max-w-7xl mx-auto space-y-6">
-                
-                <div class="fade-in-section opacity-0 translate-y-4 transition duration-500 bg-gradient-to-r from-indigo-500 to-cyan-600 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-                    <h2 class="text-2xl sm:text-3xl font-bold mb-2">Selamat Datang di LabKreasi!</h2>
-                    <p class="text-indigo-100 max-w-2xl">Pusat Inovasi, Laboratorium Solusi. Mengubah kompleksitas menjadi kesederhanaan melalui ekosistem digital yang terintegrasi dan responsif.</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="fade-in-section opacity-0 translate-y-4 transition duration-500 delay-300 lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
-                        <div class="p-6 border-b border-slate-100 dark:border-slate-700">
-                            <h3 class="text-lg font-bold">Aktivitas Terbaru</h3>
-                        </div>
-                        <div class="p-6">
-                            <ul class="space-y-4">
-                                <li class="flex gap-4">
-                                    <div class="w-2 h-2 mt-2 rounded-full bg-indigo-500"></div>
-                                    <div>
-                                        <p class="text-sm font-medium">Menambahkan subdomain baru: <i>profil.labkreasi.my.id</i></p>
-                                        <p class="text-xs text-slate-500 mt-1">Minggu, 01 Maret 2026 : 06.00 WITA</p>
-                                    </div>
-                                </li>
-                                <li class="flex gap-4">
-                                    <div class="w-2 h-2 mt-2 rounded-full bg-emerald-500"></div>
-                                    <div>
-                                        <p class="text-sm font-medium">Membangun LabKreasi</p>
-                                        <p class="text-xs text-slate-500 mt-1">Minggu, 01 Maret 2026 : 03.00 WITA</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+            <div onclick="openCamera()" class="w-16 h-16 bg-gradient-to-b from-gray-200 to-gray-400 rounded-[1.25rem] shadow-lg flex items-center justify-center relative overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
+                <div class="w-10 h-7 bg-gray-700 rounded-sm relative">
+                    <div class="absolute inset-0 m-auto w-5 h-5 bg-gray-800 border-2 border-gray-500 rounded-full flex items-center justify-center">
+                        <div class="w-2 h-2 bg-blue-400/30 rounded-full"></div>
                     </div>
+                    <div class="absolute top-1 right-1 w-1 h-1 bg-yellow-200 rounded-full"></div>
+                </div>
+                <div class="absolute top-3 w-4 h-1 bg-gray-700 rounded-t-sm"></div>
+            </div>
 
-                    <div class="fade-in-section opacity-0 translate-y-4 transition duration-500 delay-400 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
-                        <div class="p-6 border-b border-slate-100 dark:border-slate-700">
-                            <h3 class="text-lg font-bold">Status Sistem</h3>
-                        </div>
-                        <div class="p-6 space-y-4">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-medium">Status Penyelesaian Web</span>
-                                    <span class="text-slate-500">45%</span>
-                                </div>
-                                <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2">
-                                    <div class="bg-indigo-500 h-2 rounded-full" style="width: 45%"></div>
-                                </div>
-                            </div>
-                            <div class="pt-4 flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                Semua sistem berjalan normal
-                            </div>
-                        </div>
-                    </div>
+            <div onclick="notInstalled('Musik')" class="w-16 h-16 bg-gradient-to-tr from-rose-500 to-pink-400 rounded-[1.25rem] shadow-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
+                <svg class="w-10 h-10 text-white fill-current" viewBox="0 0 24 24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+            </div>
+
+            <div onclick="notInstalled('Pesan')" class="w-16 h-16 bg-gradient-to-b from-green-400 to-green-500 rounded-[1.25rem] shadow-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:-translate-y-2 hover:scale-110 active:scale-90 shadow-black/20 hover:shadow-black/40">
+                <div class="w-10 h-8 bg-white rounded-2xl relative flex items-center justify-center">
+                    <div class="absolute -bottom-1 -left-1 w-4 h-4 bg-white rotate-45 rounded-sm"></div>
                 </div>
             </div>
-        </main>
+
+        </div>
+
+        <div class="absolute bottom-1 w-32 h-1 bg-white/60 rounded-full"></div>
     </div>
 
-    <script src="./dist/main.js"></script>
+    <div id="camera-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 p-4">
+        <div class="relative w-full max-w-lg bg-gray-900 rounded-[2.5rem] overflow-hidden border border-white/20 shadow-2xl">
+            <div class="absolute top-0 w-full p-6 flex justify-between items-center z-10 text-white">
+                <button onclick="closeCamera()" class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium hover:bg-white/40 transition">Selesai</button>
+                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">📷</div>
+            </div>
+            <video id="video-feed" autoplay playsinline class="w-full h-[70vh] object-cover bg-black"></video>
+            <div class="absolute bottom-10 w-full flex justify-center items-center">
+                <div onclick="takePhoto()" class="w-20 h-20 border-4 border-white rounded-full flex items-center justify-center p-1 cursor-pointer active:scale-90 transition">
+                    <div class="w-full h-full bg-white rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-box" class="fixed top-20 left-1/2 -translate-x-1/2 z-[200] hidden">
+        <div class="bg-white/80 backdrop-blur-xl px-6 py-3 rounded-2xl shadow-2xl border border-white/20 flex items-center space-x-3">
+            <span class="text-2xl">⚠️</span>
+            <div>
+                <p id="alert-msg" class="text-gray-900 font-semibold text-sm">Aplikasi belum terinstal</p>
+                <p class="text-gray-500 text-[10px]">Silakan hubungi administrator</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi Notifikasi Belum Terinstal
+        function notInstalled(appName) {
+            const box = document.getElementById('alert-box');
+            const msg = document.getElementById('alert-msg');
+            msg.textContent = `Aplikasi ${appName} belum terinstal`;
+            
+            box.classList.remove('hidden');
+            box.classList.add('shake');
+            
+            setTimeout(() => {
+                box.classList.add('hidden');
+                box.classList.remove('shake');
+            }, 2500);
+        }
+
+        // 1. Logika Jam
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. Logika Baterai
+        function updateBattery() {
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(function(battery) {
+                    function updateAllBatteryInfo() {
+                        const level = Math.round(battery.level * 100);
+                        const batteryLevelEle = document.getElementById('battery-level');
+                        const batteryIconEle = document.getElementById('battery-icon');
+                        batteryLevelEle.textContent = level + '%';
+                        if (battery.charging) {
+                            batteryLevelEle.className = "text-[10px] text-green-400 font-bold";
+                            batteryIconEle.textContent = '⚡️';
+                        } else if (level <= 20) {
+                            batteryLevelEle.className = "text-[10px] text-red-500 font-bold animate-pulse";
+                            batteryIconEle.textContent = '🪫';
+                        } else {
+                            batteryLevelEle.className = "text-[10px] text-white";
+                            batteryIconEle.textContent = '🔋';
+                        }
+                    }
+                    updateAllBatteryInfo();
+                    battery.addEventListener('levelchange', updateAllBatteryInfo);
+                    battery.addEventListener('chargingchange', updateAllBatteryInfo);
+                });
+            }
+        }
+        updateBattery();
+
+        // 3. Logika Jaringan
+        function updateNetworkInfo() {
+            const netName = document.getElementById('network-name');
+            const wifiIcon = document.getElementById('wifi-icon');
+            if (navigator.onLine) {
+                wifiIcon.textContent = '📶';
+                const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                netName.textContent = conn ? conn.effectiveType.toUpperCase() + " Connection" : "Online";
+            } else {
+                wifiIcon.textContent = '✈️';
+                netName.textContent = "Disconnected";
+            }
+        }
+        updateNetworkInfo();
+        window.addEventListener('online', updateNetworkInfo);
+        window.addEventListener('offline', updateNetworkInfo);
+
+        // 4. Logika Kamera
+        let stream = null;
+        async function openCamera() {
+            const modal = document.getElementById('camera-modal');
+            const video = document.getElementById('video-feed');
+            modal.classList.remove('hidden');
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+                video.srcObject = stream;
+            } catch (err) {
+                alert("Gagal mengakses kamera: " + err.message);
+                closeCamera();
+            }
+        }
+        function closeCamera() {
+            if (stream) stream.getTracks().forEach(track => track.stop());
+            document.getElementById('camera-modal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
